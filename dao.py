@@ -12,6 +12,7 @@ RANKINGS_COLLECTION_NAME = 'rankings'
 REGIONS_COLLECTION_NAME = 'regions'
 USERS_COLLECTION_NAME = 'users'
 PENDING_TOURNAMENTS_COLLECTION_NAME = 'pending_tournaments'
+PLAYERS_HISTORY_COLLECTION_NAME = 'players_history'
 
 class RegionNotFoundException(Exception):
     pass
@@ -39,6 +40,7 @@ class Dao(object):
         self.rankings_col = mongo_client[database_name][RANKINGS_COLLECTION_NAME]
         self.users_col = mongo_client[database_name][USERS_COLLECTION_NAME]
         self.pending_tournaments_col = mongo_client[database_name][PENDING_TOURNAMENTS_COLLECTION_NAME]
+        self.players_history_col = mongo_client[database_name][PLAYERS_HISTORY_COLLECTION_NAME]
 
     @classmethod
     def insert_region(cls, region, mongo_client, database_name=DATABASE_NAME):
@@ -99,6 +101,16 @@ class Dao(object):
     # TODO bulk update
     def update_players(self, players):
         pass
+
+
+    def insert_player_history(self, player_history):
+        return self.players_history_col.insert(player_history.get_json_dict())
+
+    def delete_player_history(self, player_history):
+        return self.players_history_col.remove({ '_id': player_history.id })
+
+    def update_player_history(self, player_history):
+        return self.players_history_col.update({ '_id': player_history.id }, player_history.get_json_dict())
 
     def add_alias_to_player(self, player, alias):
         lowercase_alias = alias.lower()

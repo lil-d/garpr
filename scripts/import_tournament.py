@@ -42,6 +42,8 @@ def import_tournament(type, path, bracket, region, name):
     click.echo("Generating new ranking...")
     rankings.generate_ranking(dao)
 
+    # TODO: Insert Player History
+
     click.echo("Done!")
 
 def get_player_alias_to_id_map(scraper, dao):

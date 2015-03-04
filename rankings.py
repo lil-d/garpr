@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 from model import *
 import rating_calculators
 import trueskill
